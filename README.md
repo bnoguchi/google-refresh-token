@@ -3,6 +3,23 @@ google-refresh-token
 
 Refreshes Google OAuth 2 Access Tokens
 
+## Instructions
+
+```javascript
+var refresh = require('google-token-refresh');
+refresh(refreshToken, googleClientId, googleSecret, function (err, json, res) {
+  if (err) return handleError(err);
+  if (json.error) return handleError(new Error(res.statusCode + ': ' + json.error));
+
+  var newAccessToken = json.accessToken;
+  if (! accessToken) {
+    return handleError(new Error(res.statusCode + ': refreshToken error'));
+  }
+  var expireAt = new Date(+new Date + parseInt(json.expiresIn, 10));
+  handleRefreshedData(newAccessToken, expireAt);
+});
+```
+
 ## MIT License
 Copyright (c) 2013 by Brian Noguchi
 
