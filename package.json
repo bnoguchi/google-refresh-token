@@ -1,0 +1,27 @@
+{
+  "name": "google-refresh-token",
+  "version": "0.1.0",
+  "description": "Refreshes Google OAuth 2 Access Tokens ",
+  "main": "index.js",
+  "dependencies": {
+    "request": "2.16.x"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bnoguchi/google-refresh-token.git"
+  },
+  "keywords": [
+    "google",
+    "oauth",
+    "oauth2",
+    "refresh_token",
+    "access_token"
+  ],
+  "author": "Brian N Noguchi",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "2b8f218127865c21256b637a3823caa86aed0d7e"
+}
