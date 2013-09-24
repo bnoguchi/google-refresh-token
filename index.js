@@ -17,6 +17,7 @@ function refreshGoogleToken (refreshToken, clientId, clientSecret, cb) {
     , client_secret: clientSecret
     , grant_type: 'refresh_token'
     }
+  , json: true
   }, function (err, res, body) {
     // `body` should look like:
     // {
@@ -26,9 +27,8 @@ function refreshGoogleToken (refreshToken, clientId, clientSecret, cb) {
     // }
     if (err) return cb(err);
     if (parseInt(res.statusCode / 100, 10) !== 2) {
-      cb(null, {}, res);
+      cb(null, body, res);
     } else {
-      body = JSON.parse(body);
       cb(null, {
         accessToken: body.access_token
       , expiresIn: body.expires_in
