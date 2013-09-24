@@ -7,7 +7,9 @@ var request = require('request');
  *   application registration.
  * @param {Function} cb(err, {accessToken, expiresIn, idToken}, response);
  */
-exports = module.exports = function refreshGoogleToken (refreshToken, clientId, clientSecret, cb) {
+exports = module.exports = refreshGoogleToken;
+
+function refreshGoogleToken (refreshToken, clientId, clientSecret, cb) {
   request.post('https://accounts.google.com/o/oauth2/token', {
     form: {
       refresh_token: refreshToken
@@ -34,7 +36,7 @@ exports = module.exports = function refreshGoogleToken (refreshToken, clientId, 
       }, res);
     }
   });
-};
+}
 
 exports.checkTokenValidity = function (accessToken, refreshToken, clientId, clientSecret, cb) {
   request({
