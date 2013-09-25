@@ -49,7 +49,7 @@ exports.checkTokenValidity = function (accessToken, refreshToken, clientId, clie
     if (json.error && json.error.message === 'Invalid Credentials') {
       refreshGoogleToken(refreshToken, clientId, clientSecret, function (err, json, res) {
         if (!err && json.error) {
-          err = new Error(res.statusCode + ': ' + json.error.message);
+          err = new Error(res.statusCode + ': ' + (json.error.message || json.error));
         }
         var accessToken = json.accessToken;
         if (!err && !accessToken) {
