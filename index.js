@@ -46,7 +46,7 @@ exports.checkTokenValidity = function (accessToken, refreshToken, clientId, clie
   , headers: { Authorization: 'Bearer ' + accessToken }
   }, function (err, res, json) {
     if (err) return cb(err);
-    if (json.error && json.error.message === 'Invalid Credentials') {
+    if (json.error) {
       refreshGoogleToken(refreshToken, clientId, clientSecret, function (err, json, res) {
         if (!err && json.error) {
           err = new Error(res.statusCode + ': ' + (json.error.message || json.error));
