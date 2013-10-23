@@ -27,14 +27,20 @@ function refreshGoogleToken (refreshToken, clientId, clientSecret, cb) {
     // }
     if (err) return cb(err);
     if (parseInt(res.statusCode / 100, 10) !== 2) {
-      cb(null, body, res);
-    } else {
-      cb(null, {
-        accessToken: body.access_token
-      , expiresIn: body.expires_in
-      , idToken: body.id_token
-      }, res);
+      if (body.error) {
+        return cb(new Error(res.statusCode + ': ' + (body.error.message || body.error)));
+      }
+      if (!body.access_token) {
+        return cb(new Error(res.statusCode + ': refreshToken error'));
+      }
+      return cb(null, body, res);
     }
+    cb(null, {
+      accessToken: body.access_token
+    , expiresIn: body.expires_in
+    , expiresAt: +new Date + parseInt(body.expires_in, 10)
+    , idToken: body.id_token
+    }, res);
   });
 }
 
@@ -46,21 +52,6 @@ exports.checkTokenValidity = function (accessToken, refreshToken, clientId, clie
   , headers: { Authorization: 'Bearer ' + accessToken }
   }, function (err, res, json) {
     if (err) return cb(err);
-    if (json.error) {
-      refreshGoogleToken(refreshToken, clientId, clientSecret, function (err, json, res) {
-        if (!err && json.error) {
-          err = new Error(res.statusCode + ': ' + (json.error.message || json.error));
-        }
-        var accessToken = json.accessToken;
-        if (!err && !accessToken) {
-          err = new Error(res.statusCode + ': refreshToken error');
-        }
-        if (err) return cb(err);
-        var expireAt = +new Date + parseInt(json.expiresIn, 10);
-        cb(null, false, accessToken, expireAt);
-      });
-    } else {
-      cb(null, true);
-    }
+    cb(null, !json.error)
   });
 };
