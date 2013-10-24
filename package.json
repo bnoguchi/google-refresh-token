@@ -4,7 +4,7 @@
   "description": "Refreshes Google OAuth 2 Access Tokens ",
   "main": "index.js",
   "dependencies": {
-    "request": "2.16.x"
+    "request": "2.27.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
