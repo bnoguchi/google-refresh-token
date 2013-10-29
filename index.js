@@ -25,7 +25,7 @@ function refreshGoogleToken (refreshToken, clientId, clientSecret, cb) {
     //   "expires_in":3920,
     //   "token_type":"Bearer",
     // }
-    if (err) return cb(err);
+    if (err) return cb(err, body, res);
     if (parseInt(res.statusCode / 100, 10) !== 2) {
       if (body.error) {
         return cb(new Error(res.statusCode + ': ' + (body.error.message || body.error)));
@@ -51,7 +51,7 @@ exports.checkTokenValidity = function (accessToken, refreshToken, clientId, clie
   , json: true
   , headers: { Authorization: 'Bearer ' + accessToken }
   }, function (err, res, json) {
-    if (err) return cb(err);
+    if (err) return cb(err, json, res);
     cb(null, !json.error)
   });
 };
