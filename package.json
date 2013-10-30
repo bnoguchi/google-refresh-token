@@ -1,6 +1,6 @@
 {
   "name": "google-refresh-token",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Refreshes Google OAuth 2 Access Tokens ",
   "main": "index.js",
   "dependencies": {
