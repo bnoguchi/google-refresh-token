@@ -28,10 +28,10 @@ function refreshGoogleToken (refreshToken, clientId, clientSecret, cb) {
     if (err) return cb(err, body, res);
     if (parseInt(res.statusCode / 100, 10) !== 2) {
       if (body.error) {
-        return cb(new Error(res.statusCode + ': ' + (body.error.message || body.error)));
+        return cb(new Error(res.statusCode + ': ' + (body.error.message || body.error)), body, res);
       }
       if (!body.access_token) {
-        return cb(new Error(res.statusCode + ': refreshToken error'));
+        return cb(new Error(res.statusCode + ': refreshToken error'), body, res);
       }
       return cb(null, body, res);
     }
